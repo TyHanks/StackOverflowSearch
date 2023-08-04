@@ -11,12 +11,12 @@ def getHeadings(passData):
     headings = passData.find_all('h3', class_ = 's-post-summary--content-title')
     return headings
 
-#def getSummary(passData):
-
-#    return summary
+def getSummaries(passData):
+    summaries = passData.find_all('div', class_ = 's-post-summary--content-excerpt')
+    return summaries
 
 #def getUrls(passData):
-
+#
 #    return urls
 
 #def getVotes(passData):
