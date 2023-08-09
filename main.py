@@ -4,11 +4,6 @@ from scripts.data import *
 from pyfiglet import Figlet
 from clint.textui import prompt, puts, colored
 
-#summaries = getSummaries(passData) #* summaries[0].string 0 thru 9
-#urls = getUrls(passData)
-#useableUrls = buildUrls(urls) #* useableUrls[0] 0 thru 9
-#stats = getStats(passData) #* stats[0].string // 0,1,2 = votes,answers,views 3,4,5 = votes,answers,views etc...
-
 sys.path.insert(0, os.path.abspath('..'))
 
 if __name__ == '__main__':
@@ -27,6 +22,8 @@ if __name__ == '__main__':
     headings = getHeadings(passData)
     stats = getStats(passData)
     summaries = getSummaries(passData)
+    #?: Possible future feature - 1: urls = getUrls(passData)
+    #?: Possible future feature - 1: useableUrls = buildUrls(urls)
 
     #*************************************************************************************************************#
     #* Question / Header selection
@@ -48,19 +45,48 @@ if __name__ == '__main__':
     #*************************************************************************************************************#
     #* Question Selected Display
     #*************************************************************************************************************#
-    puts(colored.magenta('You selected a valid question'.format(question_selection)))
+    puts(colored.yellow('-----------------------------------------------------------------'))
+
+    def choice_prompt():
+        choice_options = [
+                    {'selector':'o','prompt': 'View Answers','return': 'o'},
+                    {'selector':'s','prompt': 'Search Again','return': 's'},
+                    {'selector':'q','prompt': 'Close / Quit','return':'quit'},
+                    ]
+        choice_selection = prompt.options("Select an option", choice_options)
+        return choice_selection
+    
+    def choice_prompt_actions(choice_selection, question_number):
+        if choice_selection == 'o':
+            ## View answers
+            #! Finish pulling data for answers before finishing this
+        elif choice_selection == 's':
+            ## Search again
+            python = sys.executable
+            os.execl(python, python, *sys.argv)
+        else:
+            ## Close application
+            sys.exit(0)
 
     if question_selection == '0':
         puts(colored.cyan(headings[0].text))
         puts('Votes: ' + colored.yellow(stats[0].string) + ' Answers: ' + colored.yellow(stats[1].string) + ' Views: ' + colored.yellow(stats[2].string))
-        puts('Summary: ' + colored.cyan(summaries[0].string))
-
+        #?: Possible future feature - 1: puts(colored.blue(useableUrls[0]))
+        puts('Summary: ' + colored.cyan(summaries[0].string.lstrip()))
+        choice_selection = choice_prompt()
+        question_number = 0
+        choice_action = choice_prompt_actions(choice_selection, question_number)
     elif question_selection == '1':
         puts(colored.cyan(headings[1].text))
         puts('Votes: ' + colored.yellow(stats[3].string) + ' Answers: ' + colored.yellow(stats[4].string) + ' Views: ' + colored.yellow(stats[5].string))
-        puts(colored.cyan(summaries[1].string))
+        #?: Possible future feature - 1: puts(colored.blue(useableUrls[0]))
+        puts('Summary: ' + colored.cyan(summaries[1].string.lstrip()))
+        choice_selection = choice_prompt()
+        question_number = 1
+        choice_action = choice_prompt_actions(choice_selection, question_number)
+        #!: Finish rest of question_selections 2, 3, 4, 5, 6, 7, 8, 9
     else:
-        puts('you failed')
+        puts('Try selection again')
 
 
     
