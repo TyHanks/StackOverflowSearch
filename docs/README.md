@@ -2,8 +2,6 @@
 
 ![License](https://img.shields.io/pypi/l/your-package-name)
 
-An API for managing a online forum using disk-persistent storage and http requests.
-
 ## Table of Contents
 
 * [About](#about)
